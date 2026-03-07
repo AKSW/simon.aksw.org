@@ -1,0 +1,117 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f9fafb;
+  color: #111827;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+/* ── Layout ── */
+
+.site-header {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.site-header .inner,
+.site-main .inner,
+.site-footer .inner {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.site-header .inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.site-main {
+  flex: 1;
+}
+
+.site-main .inner {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.site-footer {
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.site-footer .inner {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* ── Header ── */
+
+.site-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #1f2937;
+  text-decoration: none;
+}
+
+.site-title:hover {
+  color: #4b5563;
+}
+
+.site-nav {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* ── Footer ── */
+
+.site-footer a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-footer a:hover {
+  color: #4b5563;
+}
+
+/* ── Content typography ── */
+
+.content {
+  color: #374151;
+}
+
+.content p {
+  margin: 0 0 1rem;
+}
+
+.content h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 2rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 1.5rem 0 0.5rem;
+}

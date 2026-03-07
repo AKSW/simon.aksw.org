@@ -1,0 +1,16 @@
+# https://taskfile.dev
+---
+version: '3'
+
+tasks:
+
+  run-uvicorn:
+    desc: Start a hot-reloading uvicorn web server on http://127.0.0.1:8000
+    interactive: true
+    cmds:
+      - >
+        poetry run
+        uvicorn simon_aksw_org.app:simon_aksw_org --reload
+        --log-config=logconf.yaml
+        --log-level debug
+

@@ -1,0 +1,11 @@
+# Changes here will be overwritten by Copier
+_commit: v8.3.2
+_src_path: gh:eccenca/cmem-plugin-template
+author_mail: norepy@aksw.org
+author_name: AKSW e.V.
+github_page: ''
+project_description: Kondolenzbuch für unseren Kollegen Simon Bin
+project_slug: simon-aksw-org
+project_type: generic
+pypi: false
+
