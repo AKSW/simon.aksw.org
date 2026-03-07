@@ -33,6 +33,8 @@ class Settings(BaseSettings):
     templates: Jinja2Templates = Field(
         default=Jinja2Templates(directory=TemporaryDirectory().name), exclude=True
     )
+    allow_messages: bool = True
+    show_messages: bool = True
 
     model_config = SettingsConfigDict(
         env_prefix="SIMON_AKSW_ORG_",
@@ -43,6 +45,7 @@ class Settings(BaseSettings):
     def model_post_init(self, context: Any) -> None:  # noqa: ARG002, ANN401
         """Post init"""
         self.data_dir = Path(self.data_dir).resolve()
+        self.data_dir.mkdir(parents=True, exist_ok=True)
         self.templates = Jinja2Templates(directory=self.templates_dir)
         self.logger.info("Application settings loaded")
         dictionary: dict = json.loads(self.model_dump_json())

@@ -142,8 +142,9 @@ cython_debug/
 version.py
 co
 *.xml
-*.html
 *.bak
 artifacts
 .DS_Store
 .task
+
+data

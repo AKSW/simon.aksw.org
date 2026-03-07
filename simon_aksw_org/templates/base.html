@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{{ url_for('static', path='favicon.ico') }}" type="image/vnd.microsoft.icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ context.description }}" />
+    <meta name="author" content="AKSW e.V." />
+    <meta name="generator" content="aksw-guestbook {{ context.version }}" />
+    <meta property="og:title" content="{{ self.title() }}" />
+    <meta property="og:description" content="{{ context.description }}" />
+    <!-- meta property="og:image" content="{{ url_for('static', path='open-graph-image.jpg') }}" /-->
+    <meta property="og:type" content="website" />
+    <meta property="og:published_time" content="{{ context.published_date }}" />
+    <meta name="robots" content="noindex, nofollow" />
+
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+
+    <header class="site-header sticky-top">
+      <div class="container">
+        <nav class="navbar">
+          <a href="/" class="navbar-brand site-title">{% block header_title %}{{ context.title }}{% endblock %}</a>
+          <span class="site-nav text-muted small">
+            *&nbsp;{{ context.birth_date }} - †&nbsp;{{ context.death_date }}
+            {% block nav %}{% endblock %}
+          </span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="site-main py-5 flex-grow-1">
+      <div class="container">
+        {% block content %}{% endblock %}
+        {% block form %}{% endblock %}
+        {% block statements %}{% endblock %}
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        Hosted by <a href="https://aksw.org">AKSW e.V.</a>
+        &mdash; simon.aksw.org {{ context.version }}
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ context.title }}{% endblock %}
+
+{% block content %}
+    <div class=”content”>
+      <p>In tiefer Anteilnahme und in enger Verbundenheit mit den Angehörigen nehmen wir Abschied von unserem geschätzten Freund und Kollegen. Sein Tod ist für uns ein schmerzlicher Verlust.</p>
+
+      <h2>Unsere Anteilnahme</h2>
+
+      <p>Simon arbeitete seit 2015 am Institut für Angewandte Informatik (InfAI) e.V. und war in mehreren Forschungs- und Entwicklungsprojekten im Bereich Semantic Web, Wissensgraphen und Datenintegration beteiligt. Dazu gehörten unter anderem die Projekte QROWD und CoyPu. Im Umfeld der Forschungsgruppen Agile Knowledge Engineering and Semantic Web (AKSW) und DICE (Paderborn) arbeitete er an Methoden zur Verarbeitung semantischer Daten und Knowledge Graphs und automatische Verfahren für die Semantifizierung von industriellen Daten und das maschinelle Lernen von Konzepten. Zuletzt arbeitete er am URZ der Universität Leipzig in der Abteilung Forschung und Entwicklung am Forschungsprojekt MobyDex mit seinem Kollegen Claus Stadler.</p>
+
+      <p>Besonders wichtig war ihm der persönliche Austausch innerhalb der Forschungsgemeinschaft. So nahm er an internationalen Konferenzen wie der Extended Semantic Web Conference (ESWC) teil, wo er gemeinsam mit Kolleginnen und Kollegen aktuelle Forschungsergebnisse präsentierte und diskutierte. Im ESWC-Umfeld war er unter anderem an Beiträgen wie „Getting practical with GeoSPARQL and Apache Jena”, „RPT/SANSA” sowie „FAIR Data Publishing with Apache Maven” beteiligt, die im Rahmen verschiedener Workshops vorgestellt wurden.</p>
+
+      <p>Auch im Arbeitsalltag war Simon ein geschätzter Kollege. Viele erinnern sich an die gemeinsamen Mittagspausen – oft ging er mit Kolleginnen und Kollegen in die Mensa, wo neben der Forschung auch persönliche Gespräche und gemeinsames Lachen ihren Platz hatten. Diese Momente des Austauschs und der Kollegialität werden uns ebenso fehlen wie seine fachlichen Beiträge.</p>
+
+    </div>
+{% endblock %}
+
+{% block form %}
+    {% if allow_messages %}
+    <div class="mt-5">
+      <h2 class="mb-4">Hinterlassen Sie eine Nachricht im Kondolenzbuch</h2>
+      <form method="post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Nachricht <span class="text-danger">*</span></label>
+          <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+        </div>
+        <div class="mb-3 small">
+            Durch das Absenden dieses Formulars erklären Sie sich damit einverstanden, dass Ihre Angaben für die Verarbeitung und Ausgabe auf dieser Webseite ausschließlich zum Zweck der Veröffentlichung ihrer Kondolenzbekundung genutzt werden.
+        </div>
+        <div>
+            <button type="submit" class="btn btn-dark">Absenden</button>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block statements %}
+    {% if show_messages %}
+    <div class="mt-5">
+        <h2 class="mb-4">Kondolenzbekundungen</h2>
+      {% for message in messages %}
+          <div class="card mt-3" id="message-{{ message.id }}">
+              <div class="card-header d-flex justify-content-between align-items-center"><strong>{{ message.name }}</strong> <small class="date">{{ message.submitted_at_str }}&nbsp;Uhr</small></div>
+              <div class="card-body">
+                  <p class="card-text">{{ message.message }}</p>
+              </div>
+          </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+{% endblock %}

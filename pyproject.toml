@@ -18,6 +18,9 @@ fastapi-problem-details = "^0.1.4"
 pydantic-settings = "^2.13.1"
 starlette = "^0.52.1"
 pydantic = "^2.12.5"
+python-multipart = "^0.0.22"
+python-ulid = "^3.1.0"
+beautifulsoup4 = "^4.14.3"
 
 
 
