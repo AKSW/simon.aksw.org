@@ -14,7 +14,7 @@ permissions:
 
 jobs:
 
-  hub_docker_com:
+  docker:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -51,7 +51,6 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            aksw/simon.aksw.org
             ghcr.io/${{ github.repository }}
           # generate Docker tags based on the following events/attributes
           tags: |
