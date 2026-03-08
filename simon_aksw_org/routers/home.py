@@ -1,6 +1,7 @@
 """/ router"""
 
 from dataclasses import dataclass
+from typing import Annotated
 
 from bs4 import BeautifulSoup
 from fastapi import APIRouter, Form
@@ -45,12 +46,12 @@ async def homepage(request: Request) -> HTMLResponse:
 
 @router.post("/", include_in_schema=False)
 async def submit_statement(
-    name: str = Form(...),
-    message: str = Form(...),
+    name: Annotated[str, Form()],
+    message: Annotated[str, Form()],
 ) -> RedirectResponse:
     """Process condolence form submission"""
     settings = get_settings()
-    soup = BeautifulSoup(message, 'html.parser')
+    soup = BeautifulSoup(message, "html.parser")
     entry = Message(name=name, message=soup.get_text())
     file_path = settings.data_dir / f"{entry.id!s}.json"
     file_path.write_text(entry.model_dump_json(indent=2))

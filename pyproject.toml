@@ -39,6 +39,7 @@ ruff = "^0.15.0"
 trivy-py-ecc = "^0.69"
 uvicorn = "^0.41.0"
 pyyaml = "^6.0.3"
+httpx = "^0.28.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
@@ -71,7 +72,7 @@ exclude_also = [
 
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py313"
 
 [tool.ruff.format]
 line-ending = "lf" # Use `\n` line endings for all files
@@ -96,3 +97,7 @@ ignore = [
     "S101",    # use of assert detected
     "TRY003",  # Avoid specifying long messages outside the exception class
 ]
+
+[tool.deptry.per_rule_ignores]
+DEP002 = ["python-multipart", "jinja2"]
+
