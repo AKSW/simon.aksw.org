@@ -34,4 +34,4 @@ def create_app(settings: Settings) -> FastAPI:
     return app
 
 
-simon_aksw_org = create_app(settings=get_settings())
+app = create_app(settings=get_settings())

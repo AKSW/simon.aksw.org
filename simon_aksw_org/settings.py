@@ -19,7 +19,7 @@ class Settings(BaseSettings):
 
     title: str = Field(default="Kondolenzbuch für unseren Kollegen Simon Bin")
     birth_date: str = Field(default="11.04.1986")
-    death_date: str = Field(default="00.03.2026")
+    death_date: str = Field(default="08.03.2026")
     version: str = Field(default=version("simon_aksw_org"))
     data_dir: Path = Field(default=Path(TemporaryDirectory(prefix="simon-aksw-org-").name))
     static_dir: Path = Field(default=Path(__file__).parent / "static")

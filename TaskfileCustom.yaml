@@ -10,7 +10,16 @@ tasks:
     cmds:
       - >
         poetry run
-        uvicorn simon_aksw_org.app:simon_aksw_org --reload
+        uvicorn $package_dir.app:app --reload
         --log-config=logconf.yaml
         --log-level debug
+
+  docker:prepare:
+    desc: Prepare the docker image
+    cmds:
+      - rm -f docker/*.tar.gz
+      - task: clean
+      - task: build
+      - cp dist/requirements.txt docker/
+      - cp dist/*.tar.gz docker
 
