@@ -11,7 +11,7 @@ docker run -i -t --rm \
     -p 5050:5050
     -e SIMON_AKSW_ORG_DATA_DIR=/data
     -v ./data:/data
-    ghcr.io/aksw/simon.aksw.org:1.0.0
+    ghcr.io/aksw/simon.aksw.org:1.0.1
 ```
 
 
