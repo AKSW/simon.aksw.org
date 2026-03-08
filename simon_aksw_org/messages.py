@@ -3,6 +3,7 @@
 from datetime import UTC, datetime
 from pathlib import Path
 
+from bs4 import BeautifulSoup
 from pydantic import BaseModel, Field
 from ulid import ULID
 
@@ -33,3 +34,11 @@ def get_messages(data_dir: Path) -> list[Message]:
         message = Message.model_validate_json(filename.read_text(encoding="utf-8"))
         messages.append(message)
     return messages
+
+
+def save_message(name: str, text: str, data_dir: Path) -> None:
+    """Strip html from message text and save it to data directory"""
+    soup = BeautifulSoup(text, "html.parser")
+    message = Message(name=name, message=soup.get_text())
+    file_path = data_dir / f"{message.id!s}.json"
+    file_path.write_text(message.model_dump_json(indent=2))

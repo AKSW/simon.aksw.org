@@ -9,7 +9,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any
 
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from starlette.templating import Jinja2Templates
 
@@ -21,9 +21,18 @@ class Settings(BaseSettings):
     birth_date: str = Field(default="11.04.1986")
     death_date: str = Field(default="08.03.2026")
     version: str = Field(default=version("simon_aksw_org"))
-    data_dir: Path = Field(default=Path(TemporaryDirectory(prefix="simon-aksw-org-").name))
-    static_dir: Path = Field(default=Path(__file__).parent / "static")
-    templates_dir: Path = Field(default=Path(__file__).parent / "templates")
+    data_dir: Path = Field(
+        default=Path(TemporaryDirectory(prefix="simon-aksw-org-").name),
+        description="Data directory, where the JSON files are saved.",
+    )
+    static_dir: Path = Field(
+        default=Path(__file__).parent / "static",
+        description="Static folder. Where images and icons are loaded from.",
+    )
+    templates_dir: Path = Field(
+        default=Path(__file__).parent / "templates",
+        description="Template folder. Where the jinja2 html files are loaded from.",
+    )
     published_date: str = Field(
         default=datetime.fromtimestamp(Path(__file__).stat().st_mtime, tz=UTC)
         .isoformat()
@@ -33,8 +42,10 @@ class Settings(BaseSettings):
     templates: Jinja2Templates = Field(
         default=Jinja2Templates(directory=TemporaryDirectory().name), exclude=True
     )
-    allow_messages: bool = True
-    show_messages: bool = True
+    allow_messages: bool = Field(default=True, description="Allow new submissions.")
+    show_messages: bool = Field(default=True, description="Show submissions.")
+    recaptcha_secret_key: SecretStr = Field(description="Recaptcha secret key.")
+    recaptcha_site_key: str = Field(description="Recaptcha site key.")
 
     model_config = SettingsConfigDict(
         env_prefix="SIMON_AKSW_ORG_",

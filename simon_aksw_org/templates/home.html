@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block form %}
-    {% if allow_messages %}
+    {% if context.allow_messages %}
     <div class="mt-5">
       <h2 class="mb-4">Hinterlassen Sie eine Nachricht im Kondolenzbuch</h2>
       <form method="post">
@@ -43,10 +43,10 @@
 
 
 {% block statements %}
-    {% if show_messages %}
+    {% if context.show_messages %}
     <div class="mt-5">
         <h2 class="mb-4">Kondolenzbekundungen</h2>
-      {% for message in messages %}
+      {% for message in context.messages %}
           <div class="card mt-3" id="message-{{ message.id }}">
               <div class="card-header d-flex justify-content-between align-items-center"><strong>{{ message.name }}</strong> <small class="date">{{ message.submitted_at_str }}&nbsp;Uhr</small></div>
               <div class="card-body">

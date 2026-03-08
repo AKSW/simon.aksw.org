@@ -1,15 +1,30 @@
 """/ router"""
 
-from dataclasses import dataclass
 from typing import Annotated
 
-from bs4 import BeautifulSoup
 from fastapi import APIRouter, Form
 from starlette.requests import Request
 from starlette.responses import HTMLResponse, RedirectResponse
 
-from simon_aksw_org.messages import Message, get_messages
-from simon_aksw_org.settings import get_settings
+from simon_aksw_org.messages import get_messages, save_message
+from simon_aksw_org.settings import Settings, get_settings
+
+
+class PageContext:
+    """Page Context"""
+
+    def __init__(self, settings: Settings, error: str = ""):
+        self.title = settings.title
+        self.birth_date = settings.birth_date
+        self.death_date = settings.death_date
+        self.version = settings.version
+        self.published_date = settings.published_date
+        self.site_key = settings.recaptcha_site_key
+        self.messages = get_messages(data_dir=settings.data_dir)
+        self.show_messages = settings.show_messages if len(self.messages) > 0 else False
+        self.allow_messages = settings.allow_messages
+        self.error = error
+
 
 router = APIRouter()
 
@@ -18,28 +33,9 @@ router = APIRouter()
 async def homepage(request: Request) -> HTMLResponse:
     """Homepage"""
     settings = get_settings()
-
-    messages = get_messages(data_dir=settings.data_dir)
-
-    @dataclass
-    class PageContext:
-        """Page Context"""
-
-        title: str = settings.title
-        birth_date: str = settings.birth_date
-        death_date: str = settings.death_date
-        version: str = settings.version
-        published_date: str = settings.published_date
-
-    context = {
-        "messages": messages,
-        "context": PageContext(),
-        "show_messages": settings.show_messages if len(messages) > 0 else False,
-        "allow_messages": settings.allow_messages,
-    }
-
+    context = PageContext(settings)
     response: HTMLResponse = settings.templates.TemplateResponse(
-        request=request, name="home.html", context=context
+        request=request, name="home.html", context={"context": context}
     )
     return response
 
@@ -51,8 +47,5 @@ async def submit_statement(
 ) -> RedirectResponse:
     """Process condolence form submission"""
     settings = get_settings()
-    soup = BeautifulSoup(message, "html.parser")
-    entry = Message(name=name, message=soup.get_text())
-    file_path = settings.data_dir / f"{entry.id!s}.json"
-    file_path.write_text(entry.model_dump_json(indent=2))
+    save_message(name=name, text=message, data_dir=settings.data_dir)
     return RedirectResponse(url="/", status_code=303)
