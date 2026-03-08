@@ -2,9 +2,10 @@
 
 from typing import Annotated
 
+import httpx
 from fastapi import APIRouter, Form
 from starlette.requests import Request
-from starlette.responses import HTMLResponse, RedirectResponse
+from starlette.responses import HTMLResponse, RedirectResponse, Response
 
 from simon_aksw_org.messages import get_messages, save_message
 from simon_aksw_org.settings import Settings, get_settings
@@ -42,10 +43,29 @@ async def homepage(request: Request) -> HTMLResponse:
 
 @router.post("/", include_in_schema=False)
 async def submit_statement(
+    request: Request,
     name: Annotated[str, Form()],
     message: Annotated[str, Form()],
-) -> RedirectResponse:
+    g_recaptcha_response: Annotated[str, Form(alias="g-recaptcha-response")] = "",
+) -> Response:
     """Process condolence form submission"""
     settings = get_settings()
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={
+                "secret": settings.recaptcha_secret_key.get_secret_value(),
+                "response": g_recaptcha_response,
+            },
+        )
+    if not resp.json().get("success"):
+        context = PageContext(
+            settings, error="reCAPTCHA-Überprüfung fehlgeschlagen. Bitte versuchen Sie es erneut."
+        )
+        return settings.templates.TemplateResponse(
+            request=request, name="home.html", context={"context": context}, status_code=400
+        )
+
     save_message(name=name, text=message, data_dir=settings.data_dir)
     return RedirectResponse(url="/", status_code=303)

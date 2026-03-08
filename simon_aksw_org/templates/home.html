@@ -21,6 +21,9 @@
     {% if context.allow_messages %}
     <div class="mt-5">
       <h2 class="mb-4">Hinterlassen Sie eine Nachricht im Kondolenzbuch</h2>
+      {% if context.error %}
+      <div class="alert alert-danger" role="alert">{{ context.error }}</div>
+      {% endif %}
       <form method="post">
         <div class="mb-3">
           <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
@@ -32,6 +35,9 @@
         </div>
         <div class="mb-3 small">
             Durch das Absenden dieses Formulars erklären Sie sich damit einverstanden, dass Ihre Angaben für die Verarbeitung und Ausgabe auf dieser Webseite ausschließlich zum Zweck der Veröffentlichung ihrer Kondolenzbekundung genutzt werden.
+        </div>
+        <div class="mb-3">
+            <div class="g-recaptcha" data-sitekey="{{ context.site_key }}"></div>
         </div>
         <div>
             <button type="submit" class="btn btn-dark">Absenden</button>
