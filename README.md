@@ -7,11 +7,14 @@ Kondolenzbuch für unseren Kollegen Simon Bin
 ## Start Container
 
 ```
-docker run -i -t --rm \
-    -p 5050:5050
-    -e SIMON_AKSW_ORG_DATA_DIR=/data
-    -v ./data:/data
-    ghcr.io/aksw/simon.aksw.org:1.0.1
+$ cat .env
+SIMON_AKSW_ORG_DATA_DIR=/data
+SIMON_AKSW_ORG_ALLOW_MESSAGES=true
+SIMON_AKSW_ORG_SHOW_MESSAGES=true
+SIMON_AKSW_ORG_RECAPTCHA_SECRET_KEY=...
+SIMON_AKSW_ORG_RECAPTCHA_SITE_KEY=...
+
+$ docker run --pull=always -i -t --rm -p 5050:5050 --env-file .env -v ./data:/data ghcr.io/aksw/simon.aksw.org:1.1.0
 ```
 
 
