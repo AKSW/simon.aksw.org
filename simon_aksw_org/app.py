@@ -11,15 +11,14 @@ from simon_aksw_org.settings import Settings, get_settings
 
 def create_app(settings: Settings) -> FastAPI:
     """Create FastAPI app"""
-    app = FastAPI(
-        title=settings.title,
-        version=settings.version,
+    new_app = FastAPI(
+        title=settings.title, version=settings.version, docs_url=None, openapi_url=None
     )
 
-    app.settings = settings  # type: ignore[attr-defined]
-    init_app_problem_details(app)
+    new_app.settings = settings  # type: ignore[attr-defined]
+    init_app_problem_details(new_app)
 
-    app.add_middleware(
+    new_app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
         allow_credentials=True,
@@ -27,11 +26,11 @@ def create_app(settings: Settings) -> FastAPI:
         allow_headers=["*"],
     )
 
-    app.mount("/static", StaticFiles(directory=settings.static_dir), name="static")
-    app.include_router(home.router)
-    app.include_router(favicon.router)
+    new_app.mount("/static", StaticFiles(directory=settings.static_dir), name="static")
+    new_app.include_router(home.router)
+    new_app.include_router(favicon.router)
     settings.logger.info(f"{settings.title} v{settings.version} initialized")
-    return app
+    return new_app
 
 
 app = create_app(settings=get_settings())
