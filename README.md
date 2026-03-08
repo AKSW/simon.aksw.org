@@ -4,6 +4,17 @@ Kondolenzbuch für unseren Kollegen Simon Bin
   
 [![poetry][poetry-shield]][poetry-link] [![ruff][ruff-shield]][ruff-link] [![mypy][mypy-shield]][mypy-link] [![copier][copier-shield]][copier] 
 
+## Start Container
+
+```
+docker run -i -t --rm \
+    -p 5050:5050
+    -e SIMON_AKSW_ORG_DATA_DIR=/data
+    -v ./data:/data
+    ghcr.io/aksw/simon.aksw.org:develop
+```
+
+
 ## Development
 
 - Run [task](https://taskfile.dev/) to see all major development tasks.
