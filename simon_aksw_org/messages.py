@@ -36,9 +36,13 @@ def get_messages(data_dir: Path) -> list[Message]:
     return messages
 
 
-def save_message(name: str, text: str, data_dir: Path) -> None:
-    """Strip html from message text and save it to data directory"""
+def save_message(name: str, text: str, data_dir: Path) -> str:
+    """Strip html from message text and save it to data directory
+
+    returns the ID of the message
+    """
     soup = BeautifulSoup(text, "html.parser")
     message = Message(name=name, message=soup.get_text())
     file_path = data_dir / f"{message.id!s}.json"
     file_path.write_text(message.model_dump_json(indent=2))
+    return str(message.id)

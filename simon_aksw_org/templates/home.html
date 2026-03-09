@@ -53,12 +53,12 @@
 
 {% block form %}
     {% if context.allow_messages %}
-    <div class="mt-5">
+    <div class="mt-5" id="form">
       <h2 class="mb-4">Hinterlassen Sie eine Nachricht im Kondolenzbuch</h2>
       {% if context.error %}
       <div class="alert alert-danger" role="alert">{{ context.error }}</div>
       {% endif %}
-      <form method="post">
+      <form method="post" action="#form">
         <div class="mb-3">
           <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
           <input type="text" class="form-control" id="name" name="name" required>
